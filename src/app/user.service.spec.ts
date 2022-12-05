@@ -82,7 +82,8 @@ describe('UserService', () => {
   // let POSTS=[[1,234,4],[34.343,2,4,5]]
 
   //   let POSTS=[[{name:"asdf",location:"India"}],[{place:"kerala",time:"12"}]]
-  let POSTS=[1,234,4]
+      let POSTS=[{name:"asdf",location:"India"}]
+  // let POSTS=[1,234,4]
   beforeEach(() => {
 
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
@@ -112,26 +113,28 @@ describe('UserService', () => {
     expect(httpClientSpy.get).toHaveBeenCalledTimes(2);
   })
 
-  it("http client Get method",()=>{
 
-    const testpost= [
-      [{id:1,name:"ken"},{id:2,name:"kenny"}],
 
-      [{id:4,userName:'tom'},{id:9,userNmae:"jerry"}]
-                    ]
-      service.apiCall().subscribe((posts:any)=>{
-        expect(testpost).toBe(posts);
-      })   
-      const req1 =httpTestingController.expectOne('https://gorest.co.in/public/v2/users');
-      const req2= httpTestingController.expectOne("https://gorest.co.in/public/v2/posts") 
+  // it("http client Get method",()=>{
+
+  //   const testpost= [
+  //     [{id:1,name:"ken"},{id:2,name:"kenny"}],
+
+  //     [{id:4,userName:'tom'},{id:9,userNmae:"jerry"}]
+  //                   ]
+  //     service.apiCall().subscribe((posts:any)=>{
+  //       expect(testpost).toBe(posts);
+  //     })   
+  //     // const req1 =httpTestingController.expectOne('https://gorest.co.in/public/v2/users');
+  //     // const req2= httpTestingController.expectOne("https://gorest.co.in/public/v2/posts") 
         
   
-      expect(req1.cancelled).toBeFalsy();
-      expect(req2.cancelled).toBeFalsy();
-      req1.flush([{id:1,name:"ken"},{id:2,name:"kenny"}]);
-      req2.flush([{id:4,userName:'tom'},{id:9,userNmae:"jerry"}]);
-         httpTestingController.verify();
-    })
+  //     // expect(req1.cancelled).toBeFalsy();
+  //     // expect(req2.cancelled).toBeFalsy();
+  //     // req1.flush([{id:1,name:"ken"},{id:2,name:"kenny"}]);
+  //     // req2.flush([{id:4,userName:'tom'},{id:9,userNmae:"jerry"}]);
+  //     //    httpTestingController.verify();
+  //   })
 
 
   // describe('testing all get http calls',()=>{
@@ -149,6 +152,34 @@ describe('UserService', () => {
   //     expect(httpClientSpy.get).toHaveBeenCalledTimes(2);
   //   })
   //  })
+
+
+
+  describe('testing all get http calls',()=>{
+  
+  it('should return expected response',()=>{
+    // httpClientSpy.get.and.returnValue(of(POSTS));
+    // // console.log(POSTS)
+    // service.apiCall().subscribe({
+    //   next:(posts)=>{
+       
+    //     expect(posts).toEqual(POSTS);
+       
+    //   }
+    // });
+    // expect(httpClientSpy.get).toHaveBeenCalledTimes(2);
+
+    httpClientSpy.get.and.returnValue(of(POSTS))
+    service.postsRx.subscribe({
+
+      next:(posts:any)=>{
+        expect(posts).toEqual(POSTS);
+      }
+    })
+  })
+
+
+ })
 
 
 });

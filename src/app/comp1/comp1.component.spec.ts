@@ -43,19 +43,39 @@ describe('Comp1Component', () => {
 
   it(`click function`, () => {
 component.postArray=[ 
-  { name:'kevin', address:"mumbai", user_id:12},
+  { name:'kevin', address:"mumbai", user_id:12,title:"us"},
   {name:'rahul', address:"delhi",user_id:13,title:"Uk"},
 ]
-
 component.usersArray=[
-  {id:13,car:"audi"},
+  {id:14,car:"audi"},
   {id:15,car:"bmw"}
 ]
-
 component.viewPosts({id:14,car:"audi"});
-
-expect(component.usersArray).toEqual([{id:13,car:"audi"}, {id:15,car:"bmw"}]);
+expect(component.usersArray).toEqual([{id:14,car:"audi"}, {id:15,car:"bmw"}]);
 // {id:13,car:"audi",post:"Uk"}, {id:15,car:"bmw"}
+  });
+
+  it(`click function  1st condition`, () => {
+    component.postArray=[ 
+      { name:'kevin', address:"mumbai", user_id:12,title:"us"},
+      {name:'rahul', address:"delhi",user_id:13,title:"Uk"},
+    ]
+    component.usersArray=[
+      {id:13,car:"audi"},
+      {id:15,car:"bmw"}
+    ]
+    component.viewPosts({id:13,car:"audi"});
+
+    component.usersArray=[ {id:13,car:"audi",title:"Uk"}, {id:15,car:"bmw"}];
+
+    expect(component.usersArray).toEqual([ {id:13,car:"audi",title:"Uk"}, {id:15,car:"bmw"}]);
+    // {id:13,car:"audi",post:"Uk"}, {id:15,car:"bmw"}
+      });
+
+
+
+  it(`toggle has default value`, () => {
+    expect(component.toggle).toEqual(false);
   });
 
 
